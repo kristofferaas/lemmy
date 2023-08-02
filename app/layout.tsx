@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppNav } from "@/components/lemmy/app-nav";
+import { AppFooter } from "@/components/lemmy/app-footer";
+import { ThemeProvider } from "@/components/ui/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Layout>
-          <Header>
-            <AppNav />
-          </Header>
-          <Body>{children}</Body>
-          {/* <Footer></Footer> */}
-        </Layout>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <Layout>
+            <Header>
+              <AppNav />
+            </Header>
+            <Body>{children}</Body>
+            <Footer>
+              <AppFooter />
+            </Footer>
+          </Layout>
+        </ThemeProvider>
       </body>
     </html>
   );

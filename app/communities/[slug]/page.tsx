@@ -1,4 +1,4 @@
-import { PostList } from "@/components/lemmy/post-list";
+import { PostList } from "@/components/lemmy/post";
 import { CodeBlock } from "@/components/ui/code-block";
 import { client } from "@/lib/client";
 import { z } from "zod";

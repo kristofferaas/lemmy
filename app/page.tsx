@@ -1,4 +1,4 @@
-import { PostList } from "@/components/lemmy/post-list";
+import { PostList } from "@/components/lemmy/post";
 
 export default async function Home() {
   return (
