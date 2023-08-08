@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { client } from "@/lib/client";
-import { ArrowBigUpDashIcon, ArrowBigUpIcon, ArrowUpIcon } from "lucide-react";
+import {
+  ArrowBigUpIcon
+} from "lucide-react";
 import Link from "next/link";
 
 export type PostListProps = {
   communityId?: number;
+  page?: number;
 };
 
 export async function PostList(props: PostListProps) {
