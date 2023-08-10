@@ -29,6 +29,7 @@ export type PostListProps = {
 export async function PostList(props: PostListProps) {
   const posts = await client.getPosts({
     community_id: props.communityId,
+    page: props.page,
   });
 
   return (
