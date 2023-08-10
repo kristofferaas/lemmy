@@ -1,9 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import { client } from "@/lib/client";
 import {
-  ArrowBigUpIcon
+  ArrowBigUpIcon,
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ImageIcon,
+  LinkIcon,
+  MessageCircleIcon,
+  TextIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { Thumbnail } from "../ui/thumbnail";
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export type PostListProps = {
   communityId?: number;
@@ -16,7 +32,7 @@ export async function PostList(props: PostListProps) {
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {posts.posts.map((view) => (
         <Post key={view.post.id} postId={view.post.id} />
       ))}
@@ -31,36 +47,83 @@ type PostProps = {
 export async function Post({ postId }: PostProps) {
   const post = await client.getPost({ id: postId });
 
-  const thumbnail = post.post_view.post.thumbnail_url;
-
   return (
-    <Link
-      className="border rounded-lg p-4 flex space-x-4 hover:bg-accent transition-colors"
-      href={`/posts/${postId}`}
-    >
-      <div className="w-10 shrink-0">
-        <ArrowBigUpIcon className="w-6 h-6 mx-auto" />
-        <div className="w-full text-center">{post.post_view.counts.score}</div>
-      </div>
-      {thumbnail && (
-        <img
-          src={thumbnail}
-          alt=""
-          width={56}
-          height={56}
-          className="w-14 h-14 object-cover"
-        />
-      )}
-      <div className="flex flex-col">
-        <h2 className="font-bold">{post.post_view.post.name}</h2>
+    <div className="flex space-x-4">
+      <PostThumbnail postId={postId} />
+      <div className="flex flex-col space-y-2">
+        <Link className="font-bold" href={`posts/${post.post_view.post.id}`}>
+          {post.post_view.post.name}
+        </Link>
         <div className="text-muted-foreground">
-          by {post.post_view.creator.name} in {post.post_view.community.name} -{" "}
-          {post.post_view.counts.comments} comments
+          by{" "}
+          <Link
+            className="hover:underline"
+            href={`/users/${post.post_view.creator.id}`}
+          >
+            {post.post_view.creator.name}
+          </Link>{" "}
+          in{" "}
+          <Link
+            className="hover:underline"
+            href={`/communities/${post.post_view.community.name}`}
+          >
+            {post.post_view.community.name}
+          </Link>
+        </div>
+        <div className="flex space-x-2">
+          <Button variant="outline">
+            {post.post_view.counts.upvotes}
+            <ArrowUpIcon className="w-4 h-4 ml-2" />
+          </Button>
+          <Button variant="outline">
+            {post.post_view.counts.downvotes}
+            <ArrowDownIcon className="w-4 h-4 ml-2" />
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href={`/posts/${post.post_view.post.id}`}>
+              {post.post_view.counts.comments}
+              <MessageCircleIcon className="w-4 h-4 ml-2" />
+            </Link>
+          </Button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
+
+const PostThumbnail = async ({ postId }: PostProps) => {
+  const { post_view } = await client.getPost({ id: postId });
+
+  const type = post_view.post.thumbnail_url
+    ? "image"
+    : post_view.post.url
+    ? "link"
+    : "text";
+
+  switch (type) {
+    case "image": {
+      return (
+        <div className="w-20 h-20 shrink-0 bg-muted rounded-lg flex justify-center items-center">
+          <ImageIcon className="w-6 h-6 text-muted-foreground" />
+        </div>
+      );
+    }
+    case "link": {
+      return (
+        <div className="w-20 h-20 shrink-0 bg-muted rounded-lg flex justify-center items-center">
+          <LinkIcon className="w-6 h-6 text-muted-foreground" />
+        </div>
+      );
+    }
+    case "text": {
+      return (
+        <div className="w-20 h-20 shrink-0 bg-muted rounded-lg flex justify-center items-center">
+          <TextIcon className="w-6 h-6 text-muted-foreground" />
+        </div>
+      );
+    }
+  }
+};
 
 export async function PostContent({ postId }: PostProps) {
   const post = await client.getPost({ id: postId });
