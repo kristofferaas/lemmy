@@ -1,16 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 type ThumbnailProps = {
   src: string;
@@ -24,7 +20,10 @@ export function Thumbnail({ src, alt, className }: ThumbnailProps) {
     <Dialog>
       <DialogTrigger>
         <img
-          className={cn("w-20 h-20 shrink-0 object-cover rounded-lg", className)}
+          className={cn(
+            "h-20 w-20 shrink-0 rounded-lg object-cover",
+            className,
+          )}
           src={src}
           alt={alt}
           width={56}
@@ -33,7 +32,7 @@ export function Thumbnail({ src, alt, className }: ThumbnailProps) {
       </DialogTrigger>
       <DialogContent>
         <img
-          className="max-w-full max-h-full mt-6 rounded-lg"
+          className="mt-6 max-h-full max-w-full rounded-lg"
           src={src}
           alt={alt}
         />

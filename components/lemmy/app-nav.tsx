@@ -1,7 +1,3 @@
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { cookies } from "next/headers";
-import { client } from "@/lib/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,18 +6,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { client } from "@/lib/client";
 import Avatar from "boring-avatars";
 import { LogOutIcon, Settings, UserIcon } from "lucide-react";
+import { cookies } from "next/headers";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 export async function AppNav() {
   const jwt = cookies().get("token")?.value;
 
   return (
     <>
-      <nav className="fixed w-screen bg-background border-b h-14 flex">
-        <div className="container max-w-5xl flex items-center justify-between">
+      <nav className="fixed flex h-14 w-screen border-b bg-background">
+        <div className="container flex max-w-5xl items-center justify-between">
           <Link href="/">
-            <h1 className="font-bold text-xl">Lemmy</h1>
+            <h1 className="text-xl font-bold">Lemmy</h1>
           </Link>
           {jwt ? (
             <User jwt={jwt} />
@@ -68,20 +68,20 @@ async function User({ jwt }: UserProps) {
         <DropdownMenuSeparator />
         <Link href="/profile">
           <DropdownMenuItem>
-            <UserIcon className="w-4 h-4 mr-2" />
+            <UserIcon className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
         </Link>
         <Link href="/settings">
           <DropdownMenuItem>
-            <Settings className="w-4 h-4 mr-2" />
+            <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
         <Link href="/logout">
           <DropdownMenuItem>
-            <LogOutIcon className="w-4 h-4 mr-2" />
+            <LogOutIcon className="mr-2 h-4 w-4" />
             <span>Logout</span>
           </DropdownMenuItem>
         </Link>

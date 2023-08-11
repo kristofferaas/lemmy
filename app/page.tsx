@@ -17,7 +17,7 @@ export default async function Home({
   const query = searchParamsSchema.parse(searchParams);
 
   return (
-    <main className="container max-w-5xl py-4 space-y-4">
+    <main className="container max-w-5xl space-y-4 py-4">
       <Filter value={query} />
       <PostList page={query.page} />
       <Pagination page={query.page} />

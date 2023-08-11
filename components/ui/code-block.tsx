@@ -12,8 +12,8 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   return (
     <div
       className={cn(
-        "border rounded-lg p-4 overflow-auto bg-accent text-accent-foreground",
-        className
+        "overflow-auto rounded-lg border bg-accent p-4 text-accent-foreground",
+        className,
       )}
     >
       <code>{children}</code>

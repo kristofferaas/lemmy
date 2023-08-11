@@ -1,4 +1,3 @@
-import { Button } from "../ui/button";
 import {
   Select,
   SelectContent,
@@ -6,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "../ui/button";
 
 type FilterProps = {
   value?: {

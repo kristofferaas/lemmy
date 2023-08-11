@@ -1,7 +1,7 @@
 import { CommentList, commentFilterSchema } from "@/components/lemmy/comments";
 import { Post, PostContent } from "@/components/lemmy/post";
-import { z } from "zod";
 import { ErrorBoundary } from "react-error-boundary";
+import { z } from "zod";
 
 const paramsSchema = z.object({
   postId: z.coerce.number(),

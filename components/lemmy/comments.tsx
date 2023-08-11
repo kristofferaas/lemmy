@@ -13,8 +13,8 @@ import {
   PencilIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { z } from "zod";
+import { Button } from "../ui/button";
 
 type CommentListProps = {
   postId?: number;
@@ -54,7 +54,7 @@ export async function Comment({ commentId }: CommentProps) {
   console.log(comment_view);
 
   return (
-    <div className="border-l-2 space-y-4 pl-4">
+    <div className="space-y-4 border-l-2 pl-4">
       <div className="text-muted-foreground">
         by{" "}
         <Link
@@ -68,21 +68,21 @@ export async function Comment({ commentId }: CommentProps) {
       <div className="flex space-x-2">
         <Button variant="outline" size="sm">
           {comment_view.counts.upvotes}
-          <ArrowUpIcon className="w-4 h-4 ml-2" />
+          <ArrowUpIcon className="ml-2 h-4 w-4" />
         </Button>
         <Button variant="outline" size="sm">
           {comment_view.counts.downvotes}
-          <ArrowDownIcon className="w-4 h-4 ml-2" />
+          <ArrowDownIcon className="ml-2 h-4 w-4" />
         </Button>
         <Button variant="outline" size="sm" asChild>
           <Link href={`/comments/${comment_view.comment.id}`}>
             {comment_view.counts.child_count}
-            <MessageCircleIcon className="w-4 h-4 ml-2" />
+            <MessageCircleIcon className="ml-2 h-4 w-4" />
           </Link>
         </Button>
         <Button variant="outline" size="sm">
           Reply
-          <PencilIcon className="w-4 h-4 ml-2" />
+          <PencilIcon className="ml-2 h-4 w-4" />
         </Button>
       </div>
     </div>

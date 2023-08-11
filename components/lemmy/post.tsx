@@ -1,7 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import { client } from "@/lib/client";
 import {
-  ArrowBigUpIcon,
   ArrowDownIcon,
   ArrowUpIcon,
   ImageIcon,
@@ -10,16 +8,7 @@ import {
   TextIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { Thumbnail } from "../ui/thumbnail";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 export type PostListProps = {
   communityId?: number;
@@ -74,16 +63,16 @@ export async function Post({ postId }: PostProps) {
         <div className="flex space-x-2">
           <Button variant="outline">
             {post.post_view.counts.upvotes}
-            <ArrowUpIcon className="w-4 h-4 ml-2" />
+            <ArrowUpIcon className="ml-2 h-4 w-4" />
           </Button>
           <Button variant="outline">
             {post.post_view.counts.downvotes}
-            <ArrowDownIcon className="w-4 h-4 ml-2" />
+            <ArrowDownIcon className="ml-2 h-4 w-4" />
           </Button>
           <Button variant="outline" asChild>
             <Link href={`/posts/${post.post_view.post.id}`}>
               {post.post_view.counts.comments}
-              <MessageCircleIcon className="w-4 h-4 ml-2" />
+              <MessageCircleIcon className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </div>
@@ -104,22 +93,22 @@ const PostThumbnail = async ({ postId }: PostProps) => {
   switch (type) {
     case "image": {
       return (
-        <div className="w-20 h-20 shrink-0 bg-muted rounded-lg flex justify-center items-center">
-          <ImageIcon className="w-6 h-6 text-muted-foreground" />
+        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-muted">
+          <ImageIcon className="h-6 w-6 text-muted-foreground" />
         </div>
       );
     }
     case "link": {
       return (
-        <div className="w-20 h-20 shrink-0 bg-muted rounded-lg flex justify-center items-center">
-          <LinkIcon className="w-6 h-6 text-muted-foreground" />
+        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-muted">
+          <LinkIcon className="h-6 w-6 text-muted-foreground" />
         </div>
       );
     }
     case "text": {
       return (
-        <div className="w-20 h-20 shrink-0 bg-muted rounded-lg flex justify-center items-center">
-          <TextIcon className="w-6 h-6 text-muted-foreground" />
+        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-muted">
+          <TextIcon className="h-6 w-6 text-muted-foreground" />
         </div>
       );
     }
@@ -135,7 +124,7 @@ export async function PostContent({ postId }: PostProps) {
   }
 
   return (
-    <div className="border rounded-lg p-4">
+    <div className="rounded-lg border p-4">
       <p>{body}</p>
     </div>
   );

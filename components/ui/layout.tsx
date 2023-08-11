@@ -3,7 +3,7 @@ type LayoutProps = {
 };
 
 export const Layout = ({ children }: LayoutProps) => {
-  return <div className="h-screen flex flex-col">{children}</div>;
+  return <div className="flex h-screen flex-col">{children}</div>;
 };
 
 export const Header = ({ children }: LayoutProps) => {

@@ -3,13 +3,13 @@
 import { LaptopIcon, MoonIcon, SunIcon } from "lucide-react";
 import { ThemeProvider as NextThemeProvider, useTheme } from "next-themes";
 import type { ThemeProviderProps } from "next-themes/dist/types";
+import { Button } from "../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
 
 export const ThemeSelect = () => {
   const { setTheme } = useTheme();

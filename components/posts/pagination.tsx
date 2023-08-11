@@ -18,17 +18,17 @@ export function Pagination({ page = 1 }: PaginationProps) {
     <div className="flex justify-center space-x-4">
       <Button variant="outline" size="icon" asChild>
         <Link href={`?page=1`}>
-          <ArrowLeftToLineIcon className="w-4 h-4" />
+          <ArrowLeftToLineIcon className="h-4 w-4" />
         </Link>
       </Button>
       <Button variant="outline" size="icon" asChild>
         <Link href={`?page=${prevPage}`}>
-          <ArrowLeftIcon className="w-4 h-4" />
+          <ArrowLeftIcon className="h-4 w-4" />
         </Link>
       </Button>
       <Button variant="outline" size="icon" asChild>
         <Link href={`?page=${nextPage}`}>
-          <ArrowRightIcon className="w-4 h-4" />
+          <ArrowRightIcon className="h-4 w-4" />
         </Link>
       </Button>
     </div>

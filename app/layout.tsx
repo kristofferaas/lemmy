@@ -1,10 +1,10 @@
+import { AppFooter } from "@/components/lemmy/app-footer";
+import { AppNav } from "@/components/lemmy/app-nav";
 import { Body, Footer, Header, Layout } from "@/components/ui/layout";
+import { ThemeProvider } from "@/components/ui/theme";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AppNav } from "@/components/lemmy/app-nav";
-import { AppFooter } from "@/components/lemmy/app-footer";
-import { ThemeProvider } from "@/components/ui/theme";
 
 const inter = Inter({ subsets: ["latin"] });
 

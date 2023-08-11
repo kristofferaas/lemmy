@@ -1,5 +1,4 @@
 import { Comment, CommentList } from "@/components/lemmy/comments";
-import { client } from "@/lib/client";
 import { z } from "zod";
 
 const searchParamsSchema = z.object({
