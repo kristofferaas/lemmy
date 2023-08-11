@@ -51,8 +51,6 @@ type CommentProps = {
 export async function Comment({ commentId }: CommentProps) {
   const { comment_view } = await client.getComment({ id: commentId });
 
-  console.log(comment_view);
-
   return (
     <div className="space-y-4 border-l-2 pl-4">
       <div className="text-muted-foreground">

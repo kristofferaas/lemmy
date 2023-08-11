@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { PostElement } from "../posts/post-element";
 
 export type PostListProps = {
   communityId?: number;
@@ -37,48 +38,7 @@ type PostProps = {
 export async function Post({ postId }: PostProps) {
   const post = await client.getPost({ id: postId });
 
-  return (
-    <div className="flex space-x-4">
-      <PostThumbnail postId={postId} />
-      <div className="flex flex-col space-y-2">
-        <Link className="font-bold" href={`posts/${post.post_view.post.id}`}>
-          {post.post_view.post.name}
-        </Link>
-        <div className="text-muted-foreground">
-          by{" "}
-          <Link
-            className="hover:underline"
-            href={`/users/${post.post_view.creator.id}`}
-          >
-            {post.post_view.creator.name}
-          </Link>{" "}
-          in{" "}
-          <Link
-            className="hover:underline"
-            href={`/communities/${post.post_view.community.name}`}
-          >
-            {post.post_view.community.name}
-          </Link>
-        </div>
-        <div className="flex space-x-2">
-          <Button variant="outline">
-            {post.post_view.counts.upvotes}
-            <ArrowUpIcon className="ml-2 h-4 w-4" />
-          </Button>
-          <Button variant="outline">
-            {post.post_view.counts.downvotes}
-            <ArrowDownIcon className="ml-2 h-4 w-4" />
-          </Button>
-          <Button variant="outline" asChild>
-            <Link href={`/posts/${post.post_view.post.id}`}>
-              {post.post_view.counts.comments}
-              <MessageCircleIcon className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+  return <PostElement {...post.post_view} />;
 }
 
 const PostThumbnail = async ({ postId }: PostProps) => {

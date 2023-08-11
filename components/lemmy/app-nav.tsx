@@ -17,23 +17,20 @@ export async function AppNav() {
   const jwt = cookies().get("token")?.value;
 
   return (
-    <>
-      <nav className="fixed flex h-14 w-screen border-b bg-background">
-        <div className="container flex max-w-5xl items-center justify-between">
-          <Link href="/">
-            <h1 className="text-xl font-bold">Lemmy</h1>
-          </Link>
-          {jwt ? (
-            <User jwt={jwt} />
-          ) : (
-            <Button variant="outline" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-          )}
-        </div>
-      </nav>
-      <div className="h-14" />
-    </>
+    <nav className="fixed z-10 flex h-14 w-screen border-b bg-background">
+      <div className="container flex max-w-5xl items-center justify-between">
+        <Link href="/">
+          <h1 className="text-xl font-bold">Lemmy</h1>
+        </Link>
+        {jwt ? (
+          <User jwt={jwt} />
+        ) : (
+          <Button variant="outline" asChild>
+            <Link href="/login">Login</Link>
+          </Button>
+        )}
+      </div>
+    </nav>
   );
 }
 

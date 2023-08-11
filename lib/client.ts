@@ -1,8 +1,4 @@
 import { LemmyHttp } from "lemmy-js-client";
 import { env } from "./env";
 
-const nextFetch = fetch;
-
-export const client = new LemmyHttp(env.LEMMY_URL, {
-  fetchFunction: nextFetch,
-});
+export const client = new LemmyHttp(env.NEXT_PUBLIC_LEMMY_URL);

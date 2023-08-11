@@ -6,29 +6,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 type FilterProps = {
+  className?: string;
   value?: {
     type?: string;
     from?: string;
   };
 };
 
-export async function Filter({ value }: FilterProps) {
+export async function Filter({ className, value }: FilterProps) {
   return (
-    <form className="flex space-x-4">
-      <Select name="type">
+    <form className={cn("flex space-x-4", className)}>
+      <Select name="type" defaultValue={value?.type}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Type" defaultValue={value?.type} />
+          <SelectValue placeholder="Type" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="post">Posts</SelectItem>
           <SelectItem value="comment">Comments</SelectItem>
         </SelectContent>
       </Select>
-      <Select name="from">
+      <Select name="from" defaultValue={value?.from}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="From" defaultValue={value?.type} />
+          <SelectValue placeholder="From" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="subscribed">Subscribed</SelectItem>
