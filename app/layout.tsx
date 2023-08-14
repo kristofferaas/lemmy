@@ -1,10 +1,9 @@
-import { AppFooter } from "@/components/lemmy/app-footer";
 import { AppNav } from "@/components/lemmy/app-nav";
-import { Body, Footer, Header, Layout } from "@/components/ui/layout";
 import { ThemeProvider } from "@/components/ui/theme";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { QueryProvider } from "@/components/lemmy/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,18 +18,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system">
-          <Layout>
-            <Header>
+          <QueryProvider>
+            <div className="h-screen">
               <AppNav />
-            </Header>
-            <Body>{children}</Body>
-            <Footer>
-              <AppFooter />
-            </Footer>
-          </Layout>
+              {children}
+            </div>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

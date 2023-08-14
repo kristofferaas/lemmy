@@ -1,6 +1,6 @@
-import { PostList } from "@/components/lemmy/post";
 import { Filter } from "@/components/posts/filter";
-import { Pagination } from "@/components/posts/pagination";
+import { Infinite } from "@/components/posts/infinite";
+import { Suspense } from "react";
 import { z } from "zod";
 
 const searchParamsSchema = z.object({
@@ -17,10 +17,10 @@ export default async function Home({
   const query = searchParamsSchema.parse(searchParams);
 
   return (
-    <main className="container max-w-5xl space-y-4 py-4">
-      <Filter value={query} />
-      <PostList page={query.page} />
-      <Pagination page={query.page} />
+    <main className="container flex h-full max-w-5xl flex-col">
+      <Suspense fallback={<code>Loading...</code>}>
+        <Infinite className="pt-4"/>
+      </Suspense>
     </main>
   );
 }
