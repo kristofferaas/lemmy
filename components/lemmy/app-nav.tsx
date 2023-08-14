@@ -63,7 +63,7 @@ async function User({ jwt }: UserProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>{displayName}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href="/profile">
+        <Link href={`/users/${displayName}`}>
           <DropdownMenuItem>
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profile</span>

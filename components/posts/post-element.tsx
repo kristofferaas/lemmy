@@ -1,19 +1,11 @@
 import type { PostView } from "lemmy-js-client";
-import { client } from "@/lib/client";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  ImageIcon,
-  LinkIcon,
-  MessageCircleIcon,
-  TextIcon,
-} from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, MessageCircleIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { Thumbnail } from "./thumbnail";
 import Balancer from "react-wrap-balancer";
-import { UserAvatar } from "../user/user-avatar";
 import { CommunityAvatar } from "../community/community-avatar";
+import { Button } from "../ui/button";
+import { UserHandle } from "../user/user-handle";
+import { Thumbnail } from "./thumbnail";
 
 export function PostElement({ post, creator, community, counts }: PostView) {
   return (
@@ -27,10 +19,11 @@ export function PostElement({ post, creator, community, counts }: PostView) {
           <Balancer>{post.name}</Balancer>
         </Link>
         <div className="flex items-center space-x-4">
-          <Link href={`/users/${creator.id}`}>
-            <UserAvatar user={creator} />
-          </Link>
-          <Link className="hidden md:block" href={`/communities/${community.name}`}>
+          <UserHandle user={creator} />
+          <Link
+            className="hidden md:block"
+            href={`/communities/${community.name}`}
+          >
             <CommunityAvatar community={community} />
           </Link>
         </div>
