@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { PostElement } from "../posts/post-element";
+import { Markdown } from "../wysiwyg/markdown";
 
 export type PostListProps = {
   communityId?: number;
@@ -51,7 +52,7 @@ export async function PostContent({ postId }: PostProps) {
 
   return (
     <div className="rounded-lg border p-4">
-      <p>{body}</p>
+      <Markdown>{body}</Markdown>
     </div>
   );
 }

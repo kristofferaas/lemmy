@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/lemmy/query-provider";
+import { Provider } from "react-wrap-balancer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,10 +23,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system">
           <QueryProvider>
-            <div className="h-screen">
-              <AppNav />
-              {children}
-            </div>
+            <Provider>
+              <div className="h-screen">
+                <AppNav />
+                {children}
+              </div>
+            </Provider>
           </QueryProvider>
         </ThemeProvider>
       </body>

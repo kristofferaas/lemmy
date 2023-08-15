@@ -1,5 +1,6 @@
 import { CommentList, commentFilterSchema } from "@/components/lemmy/comments";
 import { Post, PostContent } from "@/components/lemmy/post";
+import { Markdown } from "@/components/wysiwyg/markdown";
 import { ErrorBoundary } from "react-error-boundary";
 import { z } from "zod";
 
@@ -18,12 +19,9 @@ export default async function PostPage({
   const filter = commentFilterSchema.parse(searchParams);
 
   return (
-    <main className="container h-full max-w-5xl space-y-4 pt-20">
+    <main className="container mb-20 h-full max-w-5xl space-y-4 pt-20">
       <Post postId={postId} />
       <PostContent postId={postId} />
-      <ErrorBoundary fallback={<div>Something went wrong</div>}>
-        <CommentList postId={postId} filter={filter} />
-      </ErrorBoundary>
     </main>
   );
 }

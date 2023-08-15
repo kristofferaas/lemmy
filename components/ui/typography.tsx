@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export const typographyVariants = cva("", {
   variants: {
     variant: {
-      normal: "text-sm font-normal text-muted-foreground",
+      normal: "text-sm font-normal",
     },
   },
   defaultVariants: {
