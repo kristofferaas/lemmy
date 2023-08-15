@@ -5,6 +5,8 @@ import { Badge } from "../ui/badge";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Typography } from "../ui/typography";
 import { RemoteImage } from "../ui/remote-image";
+import { Skeleton } from "../ui/skeleton";
+import { Suspense } from "react";
 
 type UserBannerProps = PersonView & {
   // TODO
@@ -18,11 +20,15 @@ export function UserBanner({ person, counts }: UserBannerProps) {
     <div className="space-y-4">
       {person.banner && (
         <AspectRatio ratio={2.4}>
-          <RemoteImage
-            src={person.banner}
-            alt="Profile banner"
-            className="h-full w-full rounded-lg object-cover"
-          />
+          <Suspense
+            fallback={<Skeleton className="h-full w-full rounded-lg" />}
+          >
+            <RemoteImage
+              src={person.banner}
+              alt="Profile banner"
+              className="h-full w-full rounded-lg object-cover"
+            />
+          </Suspense>
         </AspectRatio>
       )}
       <div className="flex items-center space-x-4">
@@ -37,6 +43,16 @@ export function UserBanner({ person, counts }: UserBannerProps) {
         <Badge>{counts.post_count} posts</Badge>
         <Badge>{counts.comment_count} comments</Badge>
       </div>
+    </div>
+  );
+}
+
+export function UserBannerSkeleton() {
+  return (
+    <div>
+      <AspectRatio ratio={2.4}>
+        <Skeleton className="h-full w-full" />
+      </AspectRatio>
     </div>
   );
 }
