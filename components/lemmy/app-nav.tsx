@@ -14,37 +14,31 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 
 export async function AppNav() {
-  const jwt = cookies().get("token")?.value;
-
   return (
     <nav className="fixed z-10 flex h-14 w-screen border-b bg-background">
       <div className="container flex max-w-5xl items-center justify-between">
         <Link href="/">
           <h1 className="text-xl font-bold">Lemmy</h1>
         </Link>
-        {jwt ? (
-          <User jwt={jwt} />
-        ) : (
-          <Button variant="outline" asChild>
-            <Link href="/login">Login</Link>
-          </Button>
-        )}
+        <User />
       </div>
     </nav>
   );
 }
 
-type UserProps = {
-  jwt: string;
-};
+async function User() {
+  const jwt = cookies().get("token")?.value;
 
-async function User({ jwt }: UserProps) {
   const { my_user } = await client.getSite({
     auth: jwt,
   });
 
   if (!my_user) {
-    throw new Error("User not found");
+    return (
+      <Button variant="outline" asChild>
+        <Link href="/login">Login</Link>
+      </Button>
+    );
   }
 
   const { local_user_view } = my_user;
@@ -63,7 +57,7 @@ async function User({ jwt }: UserProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>{displayName}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href="/profile">
+        <Link href={`/users/${displayName}`}>
           <DropdownMenuItem>
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profile</span>
