@@ -4,9 +4,30 @@ import { Suspense } from "react";
 import { z } from "zod";
 
 const searchParamsSchema = z.object({
-  page: z.coerce.number().optional(),
-  from: z.string().optional(),
-  type: z.string().optional(),
+  type: z.enum(["Posts", "Comments"]).optional(),
+  from: z.enum(["All", "Subscribed", "Local"]).optional(),
+  sort: z
+    .enum([
+      "Active",
+      "Hot",
+      "New",
+      "Old",
+      "TopDay",
+      "TopWeek",
+      "TopMonth",
+      "TopYear",
+      "TopAll",
+      "MostComments",
+      "NewComments",
+      "TopHour",
+      "TopSixHour",
+      "TopTwelveHour",
+      "TopThreeMonths",
+      "TopSixMonths",
+      "TopNineMonths",
+      "Controversial",
+    ])
+    .optional(),
 });
 
 export default async function Home({
@@ -17,9 +38,10 @@ export default async function Home({
   const query = searchParamsSchema.parse(searchParams);
 
   return (
-    <main className="container flex h-full max-w-5xl flex-col">
+    <main className="flex h-full flex-col space-y-4 py-4">
+      <Filter className="container max-w-5xl" value={query} />
       <Suspense fallback={<code>Loading...</code>}>
-        <Infinite className="pt-4"/>
+        <Infinite filter={query} />
       </Suspense>
     </main>
   );

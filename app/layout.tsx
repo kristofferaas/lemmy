@@ -22,9 +22,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system">
           <QueryProvider>
-            <div className="h-screen">
+            <div className="flex h-screen flex-col">
               <AppNav />
-              {children}
+              <div className="flex-auto overflow-auto">{children}</div>
             </div>
           </QueryProvider>
         </ThemeProvider>
