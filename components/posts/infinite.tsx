@@ -6,13 +6,14 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useRef } from "react";
 import { PostElement } from "./post-element";
-import { Post } from "../lemmy/post";
+import { FilterValue } from "./filter";
 
 type InfiniteProps = {
   className?: string;
+  filter?: FilterValue;
 };
 
-export function Infinite({ className }: InfiniteProps) {
+export function Infinite({ className, filter }: InfiniteProps) {
   const {
     status,
     data,
@@ -21,10 +22,14 @@ export function Infinite({ className }: InfiniteProps) {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery(["posts"], (ctx) => getPostPage(ctx.pageParam), {
-    getNextPageParam: (_lastGroup, groups) => groups.length,
-    suspense: true,
-  });
+  } = useInfiniteQuery(
+    ["posts", filter],
+    (ctx) => getPostPage(ctx.pageParam, filter),
+    {
+      getNextPageParam: (_lastGroup, groups) => groups.length,
+      suspense: true,
+    },
+  );
 
   const allRows = data ? data.pages.flatMap((d) => d.rows) : [];
 
@@ -37,7 +42,6 @@ export function Infinite({ className }: InfiniteProps) {
     getScrollElement: () => parentRef.current,
     estimateSize: () => 128,
     overscan: 5,
-    paddingStart: 56,
   });
 
   const virtualItems = rowVirtualizer.getVirtualItems();
@@ -102,20 +106,7 @@ export function Infinite({ className }: InfiniteProps) {
   );
 }
 
-async function fetchServerPage(
-  limit: number,
-  offset: number = 0,
-): Promise<{ rows: string[]; nextOffset: number }> {
-  const rows = new Array(limit)
-    .fill(0)
-    .map((e, i) => `Async loaded row #${i + offset * limit}`);
-
-  await new Promise((r) => setTimeout(r, 500));
-
-  return { rows, nextOffset: offset + 1 };
-}
-
-const getPostPage = async (page: number) => {
-  const res = await client.getPosts({ page });
+const getPostPage = async (page: number, filter?: FilterValue) => {
+  const res = await client.getPosts({ page, type_: filter?.from });
   return { rows: res.posts, nextOffset: page + 1 };
 };
