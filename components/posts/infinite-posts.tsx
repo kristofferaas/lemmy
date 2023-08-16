@@ -1,19 +1,18 @@
 "use client";
 
 import { client } from "@/lib/client";
-import { cn } from "@/lib/utils";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useVirtualizer, useWindowVirtualizer } from "@tanstack/react-virtual";
-import { useEffect, useLayoutEffect, useRef } from "react";
-import { PostElement } from "../posts/post-element";
 import { Filter } from "@/lib/schema";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { PostElement } from "./post-element";
 
-type VirtualCommunityProps = {
+type InfinitePostsProps = {
   className?: string;
-  id: number;
+  filter?: Filter;
 };
 
-export function VirtualCommunity({ className, id }: VirtualCommunityProps) {
+export function InfinitePosts({ className, filter }: InfinitePostsProps) {
   const {
     status,
     data,
@@ -23,8 +22,8 @@ export function VirtualCommunity({ className, id }: VirtualCommunityProps) {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    ["posts", id],
-    (ctx) => getPostPage(ctx.pageParam, { communityId: id }),
+    ["posts", filter],
+    (ctx) => getPostPage(ctx.pageParam, filter),
     {
       getNextPageParam: (_lastGroup, groups) => groups.length,
       suspense: true,
@@ -43,13 +42,14 @@ export function VirtualCommunity({ className, id }: VirtualCommunityProps) {
   }, []);
 
   // The virtualizer
-  const virtualizer = useWindowVirtualizer({
+  const rowVirtualizer = useWindowVirtualizer({
     count: hasNextPage ? allRows.length + 1 : allRows.length,
     estimateSize: () => 128,
     scrollMargin: parentOffsetRef.current,
+    overscan: 5,
   });
 
-  const virtualItems = virtualizer.getVirtualItems();
+  const virtualItems = rowVirtualizer.getVirtualItems();
 
   useEffect(() => {
     const lastItem = virtualItems.at(-1);
@@ -74,7 +74,7 @@ export function VirtualCommunity({ className, id }: VirtualCommunityProps) {
   ]);
 
   const yTranslateStart =
-    (virtualItems[0]?.start ?? 0) - virtualizer.options.scrollMargin;
+    (virtualItems[0]?.start ?? 0) - rowVirtualizer.options.scrollMargin;
 
   return (
     <div ref={parentRef}>
@@ -82,7 +82,7 @@ export function VirtualCommunity({ className, id }: VirtualCommunityProps) {
       <div
         className="relative w-full"
         style={{
-          height: virtualizer.getTotalSize(),
+          height: `${rowVirtualizer.getTotalSize()}px`,
         }}
       >
         <div
@@ -98,16 +98,15 @@ export function VirtualCommunity({ className, id }: VirtualCommunityProps) {
             return (
               <div
                 key={virtualRow.index}
-                data-index={virtualRow.index}
-                ref={virtualizer.measureElement}
+                style={{
+                  height: `${virtualRow.size}px`,
+                }}
               >
                 {isLoaderRow
                   ? hasNextPage
                     ? "Loading more..."
                     : "Nothing more to load"
-                  : post && (
-                      <PostElement {...post} />
-                    )}
+                  : post && <PostElement {...post} />}
               </div>
             );
           })}

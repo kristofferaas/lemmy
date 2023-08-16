@@ -15,21 +15,11 @@ type FilterProps = {
 };
 
 export async function Filter({ className, value }: FilterProps) {
-  const typeValue = value?.type || "Posts";
   const fromValue = value?.from || "Subscribed";
   const sortValue = value?.sort || "Active";
 
   return (
     <form className={cn("flex space-x-4", className)}>
-      <Select name="type" defaultValue={typeValue}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Type" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="Posts">Posts</SelectItem>
-          <SelectItem value="Comments">Comments</SelectItem>
-        </SelectContent>
-      </Select>
       <Select name="from" defaultValue={fromValue}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="From" />

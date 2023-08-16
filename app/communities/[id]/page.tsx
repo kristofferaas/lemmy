@@ -1,5 +1,5 @@
 import { CommunityBanner } from "@/components/community/community-banner";
-import { VirtualCommunity } from "@/components/community/virtual-community";
+import { InfinitePosts } from "@/components/posts/infinite-posts";
 import { client } from "@/lib/client";
 import { Suspense } from "react";
 import { z } from "zod";
@@ -22,7 +22,7 @@ export default async function CommunityPage({
     <main className="container my-4 max-w-5xl space-y-4">
       <Suspense fallback={<code>Loading...</code>}>
         <CommunityBanner {...response.community_view} />
-        <VirtualCommunity id={id} />
+        <InfinitePosts filter={{ communityId: id }} />
       </Suspense>
     </main>
   );

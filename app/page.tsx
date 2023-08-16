@@ -1,6 +1,7 @@
-import { PostList } from "@/components/lemmy/post";
 import { Filter } from "@/components/posts/filter";
+import { InfinitePosts } from "@/components/posts/infinite-posts";
 import { filterSchema } from "@/lib/schema";
+import { Suspense } from "react";
 
 export default async function Home({
   searchParams,
@@ -10,9 +11,11 @@ export default async function Home({
   const query = filterSchema.parse(searchParams);
 
   return (
-    <main className="flex h-full flex-col space-y-4 py-4">
-      <Filter className="container max-w-5xl" value={query} />
-      <PostList />
+    <main className="container my-4 max-w-5xl space-y-4">
+      <Suspense fallback={<code>Loading...</code>}>
+        <Filter value={query} />
+        <InfinitePosts filter={query} />
+      </Suspense>
     </main>
   );
 }
