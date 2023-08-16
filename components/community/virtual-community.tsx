@@ -2,18 +2,18 @@
 
 import { client } from "@/lib/client";
 import { cn } from "@/lib/utils";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useVirtualizer, useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { PostElement } from "./post-element";
+import { PostElement } from "../posts/post-element";
 import { Filter } from "@/lib/schema";
 
-type InfiniteProps = {
+type VirtualCommunityProps = {
   className?: string;
-  filter?: Filter;
+  id: number;
 };
 
-export function Infinite({ className, filter }: InfiniteProps) {
+export function VirtualCommunity({ className, id }: VirtualCommunityProps) {
   const {
     status,
     data,
@@ -23,8 +23,8 @@ export function Infinite({ className, filter }: InfiniteProps) {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(
-    ["posts", filter],
-    (ctx) => getPostPage(ctx.pageParam, filter),
+    ["posts", id],
+    (ctx) => getPostPage(ctx.pageParam, { communityId: id }),
     {
       getNextPageParam: (_lastGroup, groups) => groups.length,
       suspense: true,
@@ -43,13 +43,13 @@ export function Infinite({ className, filter }: InfiniteProps) {
   }, []);
 
   // The virtualizer
-  const rowVirtualizer = useWindowVirtualizer({
+  const virtualizer = useWindowVirtualizer({
     count: hasNextPage ? allRows.length + 1 : allRows.length,
     estimateSize: () => 128,
     scrollMargin: parentOffsetRef.current,
   });
 
-  const virtualItems = rowVirtualizer.getVirtualItems();
+  const virtualItems = virtualizer.getVirtualItems();
 
   useEffect(() => {
     const lastItem = virtualItems.at(-1);
@@ -74,7 +74,7 @@ export function Infinite({ className, filter }: InfiniteProps) {
   ]);
 
   const yTranslateStart =
-    (virtualItems[0]?.start ?? 0) - rowVirtualizer.options.scrollMargin;
+    (virtualItems[0]?.start ?? 0) - virtualizer.options.scrollMargin;
 
   return (
     <div ref={parentRef}>
@@ -82,7 +82,7 @@ export function Infinite({ className, filter }: InfiniteProps) {
       <div
         className="relative w-full"
         style={{
-          height: `${rowVirtualizer.getTotalSize()}px`,
+          height: virtualizer.getTotalSize(),
         }}
       >
         <div
@@ -98,15 +98,16 @@ export function Infinite({ className, filter }: InfiniteProps) {
             return (
               <div
                 key={virtualRow.index}
-                style={{
-                  height: `${virtualRow.size}px`,
-                }}
+                data-index={virtualRow.index}
+                ref={virtualizer.measureElement}
               >
                 {isLoaderRow
                   ? hasNextPage
                     ? "Loading more..."
                     : "Nothing more to load"
-                  : post && <PostElement {...post} />}
+                  : post && (
+                      <PostElement {...post} />
+                    )}
               </div>
             );
           })}
@@ -117,7 +118,6 @@ export function Infinite({ className, filter }: InfiniteProps) {
 }
 
 const getPostPage = async (page: number, filter?: Filter) => {
-  console.log("communityId", filter?.communityId);
   const res = await client.getPosts({
     page,
     type_: filter?.from,

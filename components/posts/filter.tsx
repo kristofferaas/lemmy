@@ -1,49 +1,17 @@
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select";
-import { Button } from "../ui/button";
+import { Filter } from "@/lib/schema";
 import { cn } from "@/lib/utils";
-import { GetPosts, ListingType, SortType } from "lemmy-js-client";
-import { z } from "zod";
-
-const filterSchema = z.object({
-  type: z.enum(["Posts", "Comments"]).optional(),
-  from: z.enum(["All", "Subscribed", "Local"]).optional(),
-  sort: z
-    .enum([
-      "Active",
-      "Hot",
-      "New",
-      "Old",
-      "TopDay",
-      "TopWeek",
-      "TopMonth",
-      "TopYear",
-      "TopAll",
-      "MostComments",
-      "NewComments",
-      "TopHour",
-      "TopSixHour",
-      "TopTwelveHour",
-      "TopThreeMonths",
-      "TopSixMonths",
-      "TopNineMonths",
-      "Controversial",
-    ])
-    .optional(),
-});
-
-export type FilterValue = z.infer<typeof filterSchema>;
+import { Button } from "../ui/button";
 
 type FilterProps = {
   className?: string;
-  value?: FilterValue;
+  value?: Filter;
 };
 
 export async function Filter({ className, value }: FilterProps) {

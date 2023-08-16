@@ -15,14 +15,17 @@ import { Button } from "../ui/button";
 
 export async function AppNav() {
   return (
-    <nav className="flex shrink-0 h-14 w-screen border-b bg-background">
-      <div className="container flex max-w-5xl items-center justify-between">
-        <Link href="/">
-          <h1 className="text-xl font-bold">Lemmy</h1>
-        </Link>
-        <User />
-      </div>
-    </nav>
+    <>
+      <nav className="fixed z-10 flex h-14 w-screen shrink-0 border-b bg-background">
+        <div className="container flex max-w-5xl items-center justify-between">
+          <Link href="/">
+            <h1 className="text-xl font-bold">Lemmy</h1>
+          </Link>
+          <User />
+        </div>
+      </nav>
+      <div className="h-14 w-screen shrink-0" />
+    </>
   );
 }
 
