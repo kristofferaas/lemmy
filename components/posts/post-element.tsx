@@ -6,10 +6,21 @@ import { CommunityAvatar } from "../community/community-avatar";
 import { Button } from "../ui/button";
 import { UserHandle } from "../user/user-handle";
 import { Thumbnail } from "./thumbnail";
+import { cn } from "@/lib/utils";
 
-export function PostElement({ post, creator, community, counts }: PostView) {
+type PostElementProps = PostView & {
+  className?: string;
+};
+
+export function PostElement({
+  className,
+  post,
+  creator,
+  community,
+  counts,
+}: PostElementProps) {
   return (
-    <div className="overflow-hidden= flex h-28 space-x-4">
+    <div className={cn("flex h-28 space-x-4", className)}>
       <Thumbnail post={post} />
       <div className="flex flex-col justify-between space-y-2">
         <Link

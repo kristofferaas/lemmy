@@ -38,8 +38,8 @@ export default async function Home({
   const query = searchParamsSchema.parse(searchParams);
 
   return (
-    <main className="container my-4 flex h-full max-w-5xl flex-col space-y-4">
-      <Filter value={query} />
+    <main className="flex h-full flex-col space-y-4 py-4">
+      <Filter className="container max-w-5xl" value={query} />
       <Suspense fallback={<code>Loading...</code>}>
         <Infinite filter={query} />
       </Suspense>

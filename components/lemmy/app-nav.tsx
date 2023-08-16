@@ -15,7 +15,7 @@ import { Button } from "../ui/button";
 
 export async function AppNav() {
   return (
-    <nav className="flex h-14 w-screen border-b bg-background">
+    <nav className="flex shrink-0 h-14 w-screen border-b bg-background">
       <div className="container flex max-w-5xl items-center justify-between">
         <Link href="/">
           <h1 className="text-xl font-bold">Lemmy</h1>

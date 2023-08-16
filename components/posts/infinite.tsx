@@ -84,11 +84,8 @@ export function Infinite({ className, filter }: InfiniteProps) {
           return (
             <div
               key={virtualRow.index}
+              className="t-0 l-0 absolute w-full"
               style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
                 height: `${virtualRow.size}px`,
                 transform: `translateY(${virtualRow.start}px)`,
               }}
@@ -97,7 +94,9 @@ export function Infinite({ className, filter }: InfiniteProps) {
                 ? hasNextPage
                   ? "Loading more..."
                   : "Nothing more to load"
-                : post && <PostElement {...post} />}
+                : post && (
+                    <PostElement className="container max-w-5xl" {...post} />
+                  )}
             </div>
           );
         })}
