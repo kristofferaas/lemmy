@@ -44,7 +44,7 @@ export function InfinitePosts({ className, filter }: InfinitePostsProps) {
   // The virtualizer
   const rowVirtualizer = useWindowVirtualizer({
     count: hasNextPage ? allRows.length + 1 : allRows.length,
-    estimateSize: () => 188,
+    estimateSize: () => 208,
     scrollMargin: parentOffsetRef.current,
     overscan: 5,
   });

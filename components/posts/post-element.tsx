@@ -4,6 +4,7 @@ import {
   ArrowUpIcon,
   MessageCircleIcon,
   MoreHorizontalIcon,
+  MoreVerticalIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { CommunityAvatar } from "../community/community-avatar";
@@ -31,17 +32,14 @@ export function PostElement({
   });
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
         <CommunityHandle community={community} />
-        <div className="flex items-center">
-          <Typography variant="p">{postTime}</Typography>
-          <MoreHorizontalIcon className="ml-2 h-4 w-4" />
-        </div>
+        <Typography variant="p">{postTime}</Typography>
       </div>
       <div className="flex h-20">
         <Thumbnail post={post} />
-        <div className="my-1 ml-2 flex flex-col space-y-1">
+        <div className="my-1 ml-4 flex flex-col space-y-1">
           <Link href={`/posts/${post.id}`} className="overflow-hidden">
             <Typography variant="h4" balance>
               {post.name}
@@ -64,6 +62,9 @@ export function PostElement({
             <MessageCircleIcon className="mr-2 h-4 w-4" />
             {counts.comments}
           </Link>
+        </Button>
+        <Button variant="outline" size="icon">
+          <MoreVerticalIcon className="h-4 w-4" />
         </Button>
       </div>
     </div>
