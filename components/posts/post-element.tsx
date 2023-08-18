@@ -33,7 +33,7 @@ export function PostElement({
           <UserHandle user={creator} />
           <Link
             className="hidden md:block"
-            href={`/communities/${community.name}`}
+            href={`/communities/${community.id}`}
           >
             <CommunityAvatar community={community} />
           </Link>

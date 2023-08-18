@@ -1,67 +1,25 @@
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select";
-import { Button } from "../ui/button";
+import { Filter } from "@/lib/schema";
 import { cn } from "@/lib/utils";
-import { GetPosts, ListingType, SortType } from "lemmy-js-client";
-import { z } from "zod";
-
-const filterSchema = z.object({
-  type: z.enum(["Posts", "Comments"]).optional(),
-  from: z.enum(["All", "Subscribed", "Local"]).optional(),
-  sort: z
-    .enum([
-      "Active",
-      "Hot",
-      "New",
-      "Old",
-      "TopDay",
-      "TopWeek",
-      "TopMonth",
-      "TopYear",
-      "TopAll",
-      "MostComments",
-      "NewComments",
-      "TopHour",
-      "TopSixHour",
-      "TopTwelveHour",
-      "TopThreeMonths",
-      "TopSixMonths",
-      "TopNineMonths",
-      "Controversial",
-    ])
-    .optional(),
-});
-
-export type FilterValue = z.infer<typeof filterSchema>;
+import { Button } from "../ui/button";
 
 type FilterProps = {
   className?: string;
-  value?: FilterValue;
+  value?: Filter;
 };
 
 export async function Filter({ className, value }: FilterProps) {
-  const typeValue = value?.type || "Posts";
   const fromValue = value?.from || "Subscribed";
   const sortValue = value?.sort || "Active";
 
   return (
     <form className={cn("flex space-x-4", className)}>
-      <Select name="type" defaultValue={typeValue}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Type" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="Posts">Posts</SelectItem>
-          <SelectItem value="Comments">Comments</SelectItem>
-        </SelectContent>
-      </Select>
       <Select name="from" defaultValue={fromValue}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="From" />

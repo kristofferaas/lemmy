@@ -20,10 +20,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <AppProvider>
-          <div className="flex h-screen flex-col">
-            <AppNav />
-            <div className="flex-auto overflow-auto">{children}</div>
-          </div>
+          <AppNav />
+          {children}
         </AppProvider>
       </body>
     </html>
