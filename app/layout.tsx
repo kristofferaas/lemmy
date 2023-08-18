@@ -1,9 +1,8 @@
-import { AppNav } from "@/components/lemmy/app-nav";
-import { ThemeProvider } from "@/components/ui/theme";
+import { AppProvider } from "@/components/app/app-provider";
+import { AppNav } from "@/components/app/app-nav";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { QueryProvider } from "@/components/lemmy/query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,14 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system">
-          <QueryProvider>
-            <div className="flex h-screen flex-col">
-              <AppNav />
-              <div className="flex-auto overflow-auto">{children}</div>
-            </div>
-          </QueryProvider>
-        </ThemeProvider>
+        <AppProvider>
+          <div className="flex h-screen flex-col">
+            <AppNav />
+            <div className="flex-auto overflow-auto">{children}</div>
+          </div>
+        </AppProvider>
       </body>
     </html>
   );
