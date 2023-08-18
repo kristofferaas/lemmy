@@ -8,7 +8,7 @@ type CommunityAvatarProps = {
 export function CommunityAvatar({ community }: CommunityAvatarProps) {
   return (
     <div className="flex items-center space-x-2">
-      <Avatar size={24} name={community.name} variant="bauhaus" />
+      <Avatar size={24} name={community.name} variant="marble" />
       <span className="text-sm text-muted-foreground">{community.name}</span>
     </div>
   );

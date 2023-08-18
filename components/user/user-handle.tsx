@@ -10,6 +10,7 @@ import Link from "next/link";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Typography } from "../ui/typography";
 import { cn } from "@/lib/utils";
+import { BotIcon } from "lucide-react";
 
 type UserHandleProps = {
   user: Person;
@@ -20,6 +21,7 @@ export function UserHandle({ user, className }: UserHandleProps) {
   const person = user;
   const headerName = person.display_name || person.name;
   const userHandle = person.name;
+  const isBot = person.bot_account;
 
   return (
     <HoverCard>
@@ -30,6 +32,7 @@ export function UserHandle({ user, className }: UserHandleProps) {
         >
           <Avatar size={24} name={user.name} variant="beam" />
           <span className="text-sm text-muted-foreground">{headerName}</span>
+          {isBot && <BotIcon className="h-4 w-4 text-muted-foreground" />}
         </Link>
       </HoverCardTrigger>
       <HoverCardPortal>

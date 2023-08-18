@@ -17,7 +17,7 @@ export async function AppNav() {
   return (
     <>
       <nav className="fixed z-10 flex h-14 w-screen shrink-0 border-b bg-background">
-        <div className="container flex max-w-5xl items-center justify-between">
+        <div className="container flex max-w-4xl items-center justify-between">
           <Link href="/">
             <h1 className="text-xl font-bold">Lemmy</h1>
           </Link>

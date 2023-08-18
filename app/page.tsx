@@ -11,7 +11,7 @@ export default async function Home({
   const query = filterSchema.parse(searchParams);
 
   return (
-    <main className="container my-4 max-w-5xl space-y-4">
+    <main className="container my-4 max-w-4xl space-y-4">
       <Suspense fallback={<code>Loading...</code>}>
         <Filter value={query} />
         <InfinitePosts filter={query} />

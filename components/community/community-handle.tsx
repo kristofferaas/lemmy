@@ -24,7 +24,7 @@ export function CommunityHandle({ community, className }: CommunityHandleProps) 
           href={`/communities/${community.id}`}
           className={cn("flex items-center space-x-2", className)}
         >
-          <Avatar size={24} name={community.name} variant="bauhaus" />
+          <Avatar size={24} name={community.name} variant="marble" />
           <span className="text-sm text-muted-foreground">
             {community.name}
           </span>
@@ -41,7 +41,7 @@ export function CommunityHandle({ community, className }: CommunityHandleProps) 
             </AspectRatio>
           )}
           <div className="flex items-center space-x-4">
-            <Avatar size={48} name={community.name} variant="bauhaus" />
+            <Avatar size={48} name={community.name} variant="marble" />
             <div>
               <h1 className="text-lg">{community.title}</h1>
               <p className="text-sm text-muted-foreground">@{community.name}</p>
