@@ -27,6 +27,7 @@
     "boring-avatars": "^1.10.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "lemmy-js-client": "0.19.0-rc.1",

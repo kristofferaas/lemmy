@@ -4,57 +4,52 @@ import {
   HoverCardPortal,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { cn } from "@/lib/utils";
 import Avatar from "boring-avatars";
-import { Person } from "lemmy-js-client";
+import { Community } from "lemmy-js-client";
 import Link from "next/link";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Typography } from "../ui/typography";
-import { cn } from "@/lib/utils";
-import { BotIcon } from "lucide-react";
 
-type UserHandleProps = {
-  user: Person;
+type CommunityHandleProps = {
+  community: Community;
   className?: string;
 };
 
-export function UserHandle({ user, className }: UserHandleProps) {
-  const person = user;
-  const headerName = person.display_name || person.name;
-  const userHandle = person.name;
-  const isBot = person.bot_account;
-
+export function CommunityHandle({ community, className }: CommunityHandleProps) {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
         <Link
-          href={`/users/${user.id}`}
+          href={`/communities/${community.id}`}
           className={cn("flex items-center space-x-2", className)}
         >
-          <Avatar size={24} name={user.name} variant="beam" />
-          <span className="text-sm text-muted-foreground">{headerName}</span>
-          {isBot && <BotIcon className="h-4 w-4 text-muted-foreground" />}
+          <Avatar size={24} name={community.name} variant="marble" />
+          <span className="text-sm text-muted-foreground">
+            {community.name}
+          </span>
         </Link>
       </HoverCardTrigger>
       <HoverCardPortal>
         <HoverCardContent className="space-y-4">
-          {user.banner && (
+          {community.banner && (
             <AspectRatio ratio={2.4}>
               <img
-                src={user.banner}
+                src={community.banner}
                 className="h-full w-full rounded-lg object-cover"
               />
             </AspectRatio>
           )}
           <div className="flex items-center space-x-4">
-            <Avatar size={48} name={person.name} variant="beam" />
+            <Avatar size={48} name={community.name} variant="marble" />
             <div>
-              <h1 className="text-lg">{headerName}</h1>
-              <p className="text-sm text-muted-foreground">@{userHandle}</p>
+              <h1 className="text-lg">{community.title}</h1>
+              <p className="text-sm text-muted-foreground">@{community.name}</p>
             </div>
           </div>
-          {person.bio && (
+          {community.description && (
             <div className="flex items-center space-x-2 overflow-hidden">
-              <Typography>{person.bio}</Typography>
+              <Typography>{community.description}</Typography>
             </div>
           )}
         </HoverCardContent>

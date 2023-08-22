@@ -14,7 +14,7 @@ export default async function UserPage({ params }: { params: unknown }) {
   });
 
   return (
-    <main className="container max-w-5xl space-y-4 py-4">
+    <main className="container max-w-4xl space-y-4 py-4">
       <UserBanner {...user.person_view} />
     </main>
   );

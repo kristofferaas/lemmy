@@ -1,60 +1,86 @@
-import type { PostView } from "lemmy-js-client";
-import { ArrowDownIcon, ArrowUpIcon, MessageCircleIcon } from "lucide-react";
+import { formatDistanceStrict } from "date-fns";
+import type { Post, PostAggregates, PostView } from "lemmy-js-client";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  MessageCircleIcon,
+  MoreVerticalIcon,
+  PencilIcon,
+  PinIcon,
+} from "lucide-react";
 import Link from "next/link";
-import Balancer from "react-wrap-balancer";
-import { CommunityAvatar } from "../community/community-avatar";
+import { CommunityHandle } from "../community/community-handle";
 import { Button } from "../ui/button";
+import { Typography } from "../ui/typography";
 import { UserHandle } from "../user/user-handle";
 import { Thumbnail } from "./thumbnail";
-import { cn } from "@/lib/utils";
 
-type PostElementProps = PostView & {
-  className?: string;
-};
+type PostElementProps = PostView & {};
 
 export function PostElement({
-  className,
   post,
   creator,
   community,
   counts,
 }: PostElementProps) {
   return (
-    <div className={cn("flex h-28 space-x-4", className)}>
-      <Thumbnail post={post} />
-      <div className="flex flex-col justify-between space-y-2">
-        <Link
-          className="max-h-14 scroll-m-20 truncate text-lg font-semibold tracking-tight"
-          href={`/posts/${post.id}`}
-        >
-          <Balancer>{post.name}</Balancer>
-        </Link>
-        <div className="flex items-center space-x-4">
-          <UserHandle user={creator} />
-          <Link
-            className="hidden md:block"
-            href={`/communities/${community.id}`}
-          >
-            <CommunityAvatar community={community} />
-          </Link>
-        </div>
-        <div className="flex space-x-2">
-          <Button variant="outline">
-            {counts.upvotes}
-            <ArrowUpIcon className="ml-2 h-4 w-4" />
-          </Button>
-          <Button className="hidden md:flex" variant="outline">
-            {counts.downvotes}
-            <ArrowDownIcon className="ml-2 h-4 w-4" />
-          </Button>
-          <Button variant="outline" asChild>
-            <Link href={`/posts/${post.id}`}>
-              {counts.comments}
-              <MessageCircleIcon className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <CommunityHandle community={community} />
+        <PostMetaData post={post} />
       </div>
+      <Link href={`/posts/${post.id}`} className="flex h-20">
+        <Thumbnail post={post} />
+        <Typography variant="h4" balance className="my-2 ml-2">
+          {post.name}
+        </Typography>
+      </Link>
+      <PostActions post={post} counts={counts} />
+    </div>
+  );
+}
+
+function PostMetaData({ post }: { post: Post }) {
+  const isFeatured = post.featured_community || post.featured_local;
+  const isEdited = !!post.updated;
+
+  const publishTime = formatDistanceStrict(
+    new Date(post.published),
+    new Date(),
+    {
+      addSuffix: true,
+    },
+  );
+
+  return (
+    <div className="flex items-center space-x-2 text-muted-foreground">
+      {isFeatured && <PinIcon className="h-4 w-4" />}
+      {isEdited && <PencilIcon className="h-4 w-4" />}
+      <Typography variant="p">{publishTime}</Typography>
+    </div>
+  );
+}
+
+function PostActions({ post, counts }: { post: Post; counts: PostAggregates }) {
+  return (
+    <div className="flex items-center space-x-2">
+      <Button variant="outline">
+        <ArrowUpIcon className="mr-2 h-4 w-4" />
+        {counts.upvotes}
+      </Button>
+      <Button variant="outline">
+        <ArrowDownIcon className="mr-2 h-4 w-4" />
+        {counts.downvotes}
+      </Button>
+      <Button variant="outline" asChild>
+        <Link href={`/posts/${post.id}`}>
+          <MessageCircleIcon className="mr-2 h-4 w-4" />
+          {counts.comments}
+        </Link>
+      </Button>
+      <Button variant="outline" size="icon">
+        <MoreVerticalIcon className="h-4 w-4" />
+      </Button>
     </div>
   );
 }

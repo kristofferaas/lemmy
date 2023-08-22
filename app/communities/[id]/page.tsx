@@ -19,7 +19,7 @@ export default async function CommunityPage({
   const response = await client.getCommunity({ id });
 
   return (
-    <main className="container my-4 max-w-5xl space-y-4">
+    <main className="container my-4 max-w-4xl space-y-4">
       <Suspense fallback={<code>Loading...</code>}>
         <CommunityBanner {...response.community_view} />
         <InfinitePosts filter={{ communityId: id }} />

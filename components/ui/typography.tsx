@@ -5,11 +5,15 @@ import { cn } from "@/lib/utils";
 export const typographyVariants = cva("", {
   variants: {
     variant: {
-      normal: "text-sm font-normal text-muted-foreground",
+      h1: "text-4xl font-bold",
+      h2: "text-3xl font-bold",
+      h3: "text-2xl font-bold",
+      h4: "text-sm font-semibold",
+      p: "text-sm font-normal text-muted-foreground",
     },
   },
   defaultVariants: {
-    variant: "normal",
+    variant: "p",
   },
 });
 
@@ -22,12 +26,25 @@ type TypographyProps = VariantProps<typeof typographyVariants> & {
 export function Typography({
   variant,
   className,
-  balance = true,
+  balance = false,
   children,
 }: TypographyProps) {
+  const TextElement = variant ?? "p";
+
+  if (balance) {
+    return (
+      <Balancer
+        as={TextElement}
+        className={cn(typographyVariants({ variant, className }))}
+      >
+        {children}
+      </Balancer>
+    );
+  }
+
   return (
-    <p className={cn(typographyVariants({ variant, className }))}>
-      {balance ? <Balancer>{children}</Balancer> : children}
-    </p>
+    <TextElement className={cn(typographyVariants({ variant, className }))}>
+      {children}
+    </TextElement>
   );
 }
