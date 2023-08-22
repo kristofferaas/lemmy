@@ -29,17 +29,12 @@ export function PostElement({
         <CommunityHandle community={community} />
         <PostMetaData post={post} />
       </div>
-      <div className="flex h-20">
+      <Link href={`/posts/${post.id}`} className="flex h-20">
         <Thumbnail post={post} />
-        <div className="my-1 ml-4 flex flex-col space-y-1">
-          <Link href={`/posts/${post.id}`} className="overflow-hidden">
-            <Typography variant="h4" balance>
-              {post.name}
-            </Typography>
-          </Link>
-          <UserHandle user={creator} />
-        </div>
-      </div>
+        <Typography variant="h4" balance className="my-2 ml-2">
+          {post.name}
+        </Typography>
+      </Link>
       <PostActions post={post} counts={counts} />
     </div>
   );
