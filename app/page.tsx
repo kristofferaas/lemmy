@@ -1,3 +1,4 @@
+import { BackToTop } from "@/components/app/back-to-top";
 import { Filter } from "@/components/posts/filter";
 import { InfinitePosts } from "@/components/posts/infinite-posts";
 import { filterSchema } from "@/lib/schema";
@@ -13,6 +14,7 @@ export default async function Home({
   return (
     <main className="container my-4 max-w-4xl space-y-4">
       <Suspense fallback={<code>Loading...</code>}>
+        <BackToTop />
         <Filter value={query} />
         <InfinitePosts filter={query} />
       </Suspense>
