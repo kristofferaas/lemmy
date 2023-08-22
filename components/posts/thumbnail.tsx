@@ -12,11 +12,12 @@ export function Thumbnail({ post }: { post: Post }) {
     <Suspense fallback={<ThumbnailPlaceholder type={type} />}>
       <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted">
         {type === "image" && (
-          <RemoteImage
-            className="h-full w-full object-cover"
-            src={post.thumbnail_url!}
-            alt={post.name}
-          />
+          <ImageIcon className="h-6 w-6 text-muted-foreground" />
+          // <RemoteImage
+          //   className="h-full w-full object-cover"
+          //   src={post.thumbnail_url!}
+          //   alt={post.name}
+          // />
         )}
         {type === "link" && (
           <LinkIcon className="h-6 w-6 text-muted-foreground" />

@@ -9,7 +9,7 @@ export const typographyVariants = cva("", {
       h2: "text-3xl font-bold",
       h3: "text-2xl font-bold",
       h4: "text-sm font-semibold",
-      p: "text-sm font-normal text-muted-foreground",
+      p: "text-sm font-normal",
     },
   },
   defaultVariants: {

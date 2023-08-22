@@ -15,7 +15,6 @@ export default async function Home({
     <main className="container my-4 max-w-4xl space-y-4">
       <Suspense fallback={<code>Loading...</code>}>
         <BackToTop />
-        <Filter value={query} />
         <InfinitePosts filter={query} />
       </Suspense>
     </main>

@@ -8,20 +8,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { client } from "@/lib/client";
 import Avatar from "boring-avatars";
-import { LogOutIcon, Settings, UserIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  ListFilterIcon,
+  LogOutIcon,
+  Settings,
+  UserIcon,
+} from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { CommunitySwitcher } from "../community/community-switcher";
+import { HomeBackButton } from "./home-back-button";
 
 export async function AppNav() {
   return (
     <>
       <nav className="fixed z-50 flex h-14 w-screen shrink-0 border-b bg-background">
-        <div className="container flex max-w-4xl items-center justify-between">
-          <Link href="/">
-            <h1 className="text-xl font-bold">Lemmy</h1>
-          </Link>
-          <User />
+        <div className="container flex max-w-4xl items-center space-x-2 px-1">
+          <HomeBackButton />
+          <CommunitySwitcher />
+          <span className="flex-1" />
+          <Button size="icon" variant="ghost">
+            <ListFilterIcon className="h-4 w-4" />
+          </Button>
         </div>
       </nav>
       <div className="h-14 w-screen shrink-0" />

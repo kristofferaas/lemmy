@@ -119,8 +119,25 @@ export function InfinitePosts({ className, filter }: InfinitePostsProps) {
 const getPostPage = async (page: number, filter?: Filter) => {
   const res = await client.getPosts({
     page,
-    type_: filter?.from,
+    type_: toType(filter?.list),
     community_id: filter?.communityId,
   });
   return { rows: res.posts, nextOffset: page + 1 };
+};
+
+const toType = (type: unknown) => {
+  switch (type) {
+    case "local": {
+      return "Local";
+    }
+    case "fediverse": {
+      return "All";
+    }
+    case "subscribed": {
+      return "Subscribed";
+    }
+    default: {
+      return undefined;
+    }
+  }
 };

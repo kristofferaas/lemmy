@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import { Typography } from "../ui/typography";
 import { UserHandle } from "../user/user-handle";
 import { Thumbnail } from "./thumbnail";
+import { CommunityHoverCard } from "../community/community-hover-card";
 
 type PostElementProps = PostView & {};
 
@@ -26,7 +27,11 @@ export function PostElement({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <CommunityHandle community={community} />
+        <CommunityHoverCard community={community}>
+          <Link href={`/communities/${community.id}`}>
+            <CommunityHandle community={community} />
+          </Link>
+        </CommunityHoverCard>
         <PostMetaData post={post} />
       </div>
       <Link href={`/posts/${post.id}`} className="flex h-20">
