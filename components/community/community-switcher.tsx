@@ -63,7 +63,7 @@ export function CommunitySwitcher({}: CommunitySwitcherProps) {
   }, [pathname, list]);
 
   return (
-    <Suspense fallback={<Skeleton className="h-10 w-[200px] rounded-md" />}>
+    <Suspense fallback={<Skeleton className="h-10 w-60 rounded-md" />}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -71,7 +71,7 @@ export function CommunitySwitcher({}: CommunitySwitcherProps) {
             role="combobox"
             aria-expanded={open}
             aria-label="Select a team"
-            className="w-[200px] justify-between"
+            className="w-60 justify-between"
           >
             {value?.type === "communities" && <CommunityItem id={value.id} />}
             {value?.type === "posts" && <CommunityPostItem id={value.id} />}
@@ -79,7 +79,7 @@ export function CommunitySwitcher({}: CommunitySwitcherProps) {
             <ChevronsUpDownIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-60 p-0">
           <Command>
             <CommandList>
               <CommandGroup heading="Lists">
@@ -93,11 +93,11 @@ export function CommunitySwitcher({}: CommunitySwitcherProps) {
                     <ListItem type="local" />
                   </CommandItem>
                 </Link>
-                <Link href="/?list=subscribed">
+                {/* <Link href="/?list=subscribed">
                   <CommandItem>
                     <ListItem type="subscribed" />
                   </CommandItem>
-                </Link>
+                </Link> */}
               </CommandGroup>
             </CommandList>
           </Command>

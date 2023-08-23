@@ -10,11 +10,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { CommunityHandle } from "../community/community-handle";
-import { Button } from "../ui/button";
-import { Typography } from "../ui/typography";
-import { UserHandle } from "../user/user-handle";
-import { Thumbnail } from "./thumbnail";
 import { CommunityHoverCard } from "../community/community-hover-card";
+import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
+import { Typography } from "../ui/typography";
+import { Thumbnail } from "./thumbnail";
 
 type PostElementProps = PostView & {};
 
@@ -90,6 +90,26 @@ function PostActions({ post, counts }: { post: Post; counts: PostAggregates }) {
   );
 }
 
-export function LoadingElement() {
-  return <div></div>;
+export function PostElementSkeleton() {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-4 w-16" />
+      </div>
+      <div className="flex h-20">
+        <Skeleton className="h-full w-20" />
+        <div className="flex flex-col justify-center ml-2 space-y-2">
+          <Skeleton className="h-5 w-44" />
+          <Skeleton className="h-5 w-32" />
+        </div>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Skeleton className="h-10 w-20" />
+        <Skeleton className="h-10 w-20" />
+        <Skeleton className="h-10 w-20" />
+        <Skeleton className="h-10 w-10" />
+      </div>
+    </div>
+  );
 }

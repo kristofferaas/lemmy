@@ -2,31 +2,23 @@
 
 import { client } from "@/lib/client";
 import { Filter } from "@/lib/schema";
-import {
-  useInfiniteQuery,
-  useSuspenseInfiniteQuery,
-} from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useLayoutEffect, useRef } from "react";
-import { PostElement } from "./post-element";
+import { PostElement, PostElementSkeleton } from "./post-element";
 
 type InfinitePostsProps = {
-  className?: string;
   filter?: Filter;
 };
 
-export function InfinitePosts({ className, filter }: InfinitePostsProps) {
+export function InfinitePosts({ filter }: InfinitePostsProps) {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useSuspenseInfiniteQuery(
-      // ["posts", filter],
-      // (ctx) => getPostPage(ctx.pageParam, filter),
-      {
-        queryKey: ["posts", filter],
-        queryFn: (ctx) => getPostPage(ctx.pageParam, filter),
-        initialPageParam: 0,
-        getNextPageParam: (_lastGroup, groups) => groups.length,
-      },
-    );
+    useSuspenseInfiniteQuery({
+      queryKey: ["posts", filter],
+      queryFn: (ctx) => getPostPage(ctx.pageParam, filter),
+      initialPageParam: 0,
+      getNextPageParam: (_lastGroup, groups) => groups.length,
+    });
 
   const allRows = data ? data.pages.flatMap((d) => d.rows) : [];
 
@@ -100,11 +92,11 @@ export function InfinitePosts({ className, filter }: InfinitePostsProps) {
                   height: `${virtualRow.size}px`,
                 }}
               >
-                {isLoaderRow
-                  ? hasNextPage
-                    ? "Loading more..."
-                    : "Nothing more to load"
-                  : post && <PostElement {...post} />}
+                {isLoaderRow ? (
+                  <PostElementSkeleton />
+                ) : (
+                  post && <PostElement {...post} />
+                )}
               </div>
             );
           })}
