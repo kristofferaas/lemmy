@@ -2,7 +2,10 @@
 
 import { client } from "@/lib/client";
 import { Filter } from "@/lib/schema";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useSuspenseInfiniteQuery,
+} from "@tanstack/react-query";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { PostElement } from "./post-element";
@@ -13,22 +16,17 @@ type InfinitePostsProps = {
 };
 
 export function InfinitePosts({ className, filter }: InfinitePostsProps) {
-  const {
-    status,
-    data,
-    error,
-    isFetching,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteQuery(
-    ["posts", filter],
-    (ctx) => getPostPage(ctx.pageParam, filter),
-    {
-      getNextPageParam: (_lastGroup, groups) => groups.length,
-      suspense: true,
-    },
-  );
+  const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useSuspenseInfiniteQuery(
+      // ["posts", filter],
+      // (ctx) => getPostPage(ctx.pageParam, filter),
+      {
+        queryKey: ["posts", filter],
+        queryFn: (ctx) => getPostPage(ctx.pageParam, filter),
+        initialPageParam: 0,
+        getNextPageParam: (_lastGroup, groups) => groups.length,
+      },
+    );
 
   const allRows = data ? data.pages.flatMap((d) => d.rows) : [];
 

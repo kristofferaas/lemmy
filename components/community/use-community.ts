@@ -1,15 +1,14 @@
 import { client } from "@/lib/client";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 export const useCommunity = (id: number) => {
-  const { data, ...query } = useQuery({
+  const { data, ...query } = useSuspenseQuery({
     queryKey: ["community", id],
     queryFn: () =>
       client.getCommunity({
         id,
       }),
-    suspense: true,
   });
 
-  return [data!, query] as const;
+  return [data, query] as const;
 };
