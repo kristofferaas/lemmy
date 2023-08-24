@@ -111,6 +111,8 @@ const getPostPage = async (page: number, filter?: Filter) => {
     page,
     type_: toType(filter?.list),
     community_id: filter?.communityId,
+    sort: filter?.sort,
+    saved_only: filter?.saved,
   });
   return { rows: res.posts, nextOffset: page + 1 };
 };

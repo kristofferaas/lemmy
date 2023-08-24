@@ -107,16 +107,6 @@ export function CommunitySwitcher({}: CommunitySwitcherProps) {
   );
 }
 
-const LoadingSwitcher = () => {
-  return (
-    <Button
-      variant="outline"
-      aria-label="Select a team"
-      className="w-[200px] justify-between"
-    ></Button>
-  );
-};
-
 const ListItem = ({ type }: { type: "local" | "fediverse" | "subscribed" }) => {
   switch (type) {
     case "local": {

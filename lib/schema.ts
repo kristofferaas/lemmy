@@ -6,6 +6,7 @@ export const filterSchema = z.object({
   list: listSchema.optional(),
   type: z.enum(["Posts", "Comments"]).optional(),
   from: z.enum(["All", "Subscribed", "Local"]).optional(),
+  saved: z.boolean().optional(),
   sort: z
     .enum([
       "Active",
