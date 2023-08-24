@@ -31,20 +31,9 @@ export function Typography({
 }: TypographyProps) {
   const TextElement = variant ?? "p";
 
-  if (balance) {
-    return (
-      <Balancer
-        as={TextElement}
-        className={cn(typographyVariants({ variant, className }))}
-      >
-        {children}
-      </Balancer>
-    );
-  }
-
   return (
     <TextElement className={cn(typographyVariants({ variant, className }))}>
-      {children}
+      {balance ? <Balancer>{children}</Balancer> : children}
     </TextElement>
   );
 }

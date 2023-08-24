@@ -36,7 +36,7 @@ export function PostElement({
       </div>
       <Link href={`/posts/${post.id}`} className="flex h-20">
         <Thumbnail post={post} />
-        <Typography variant="h4" balance className="my-2 ml-2">
+        <Typography variant="h4" balance className="my-2 ml-3 truncate">
           {post.name}
         </Typography>
       </Link>
@@ -99,7 +99,7 @@ export function PostElementSkeleton() {
       </div>
       <div className="flex h-20">
         <Skeleton className="h-full w-20" />
-        <div className="flex flex-col justify-center ml-2 space-y-2">
+        <div className="ml-2 flex flex-col justify-center space-y-2">
           <Skeleton className="h-5 w-44" />
           <Skeleton className="h-5 w-32" />
         </div>
