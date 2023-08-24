@@ -1,9 +1,7 @@
 import Avatar from "boring-avatars";
 import { CommunityView } from "lemmy-js-client";
-import { Suspense } from "react";
+import Image from "next/image";
 import { AspectRatio } from "../ui/aspect-ratio";
-import { RemoteImage } from "../ui/remote-image";
-import { Skeleton } from "../ui/skeleton";
 import { Typography } from "../ui/typography";
 
 type CommunityBannerProps = CommunityView & {
@@ -15,15 +13,13 @@ export function CommunityBanner({ community }: CommunityBannerProps) {
     <div className="space-y-4">
       {community.banner && (
         <AspectRatio ratio={2.4}>
-          <Suspense
-            fallback={<Skeleton className="h-full w-full rounded-lg" />}
-          >
-            <RemoteImage
-              src={community.banner}
-              alt="Profile banner"
-              className="h-full w-full rounded-lg object-cover"
-            />
-          </Suspense>
+          <Image
+            src={community.banner}
+            alt="Profile banner"
+            className="h-full w-full rounded-lg object-cover"
+            width={864}
+            height={360}
+          />
         </AspectRatio>
       )}
       <div className="flex items-center space-x-4">

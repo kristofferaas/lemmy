@@ -1,12 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 import Avatar from "boring-avatars";
 import { PersonView } from "lemmy-js-client";
 import { Badge } from "../ui/badge";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Typography } from "../ui/typography";
-import { RemoteImage } from "../ui/remote-image";
 import { Skeleton } from "../ui/skeleton";
 import { Suspense } from "react";
+import Image from "next/image";
 
 type UserBannerProps = PersonView & {
   // TODO
@@ -23,10 +22,12 @@ export function UserBanner({ person, counts }: UserBannerProps) {
           <Suspense
             fallback={<Skeleton className="h-full w-full rounded-lg" />}
           >
-            <RemoteImage
+            <Image
+              className="h-full w-full rounded-lg object-cover"
               src={person.banner}
               alt="Profile banner"
-              className="h-full w-full rounded-lg object-cover"
+              width={864}
+              height={360}
             />
           </Suspense>
         </AspectRatio>
