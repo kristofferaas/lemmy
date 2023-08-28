@@ -4,6 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     LEMMY_URL: z.string().url(),
+    SECRET: z.string(),
   },
   client: {
     NEXT_PUBLIC_LEMMY_URL: z.string().url(),
@@ -12,5 +13,6 @@ export const env = createEnv({
   runtimeEnv: {
     LEMMY_URL: process.env.LEMMY_URL,
     NEXT_PUBLIC_LEMMY_URL: process.env.NEXT_PUBLIC_LEMMY_URL,
+    SECRET: process.env.SECRET,
   },
 });

@@ -26,14 +26,17 @@
     "@types/node": "20.4.5",
     "@types/react": "18.2.17",
     "@types/react-dom": "18.2.7",
+    "@vercel/postgres": "^0.4.1",
     "autoprefixer": "10.4.14",
     "boring-avatars": "^1.10.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
+    "drizzle-orm": "^0.28.5",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "jose": "^4.14.4",
     "lemmy-js-client": "0.19.0-rc.1",
     "lucide-react": "^0.263.1",
     "next": "13.4.19",
@@ -51,6 +54,9 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "5.0.0-beta.14",
+    "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.19.13",
+    "pg": "^8.11.3",
     "prettier-plugin-tailwindcss": "^0.5.1"
   }
 }
