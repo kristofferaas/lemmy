@@ -16,7 +16,7 @@ export async function getLanguages() {
 export async function getSiteLanguageRaw() {
   const response = await db
     .select({
-      languageId: siteLanguage.languageId,
+      languageId: siteLanguage.language_id,
     })
     .from(site)
     .innerJoin(localSite, eq(site.id, localSite.id))

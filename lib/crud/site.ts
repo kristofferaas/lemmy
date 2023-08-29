@@ -25,6 +25,7 @@ import { getAllTaglines } from "./tagline";
 import { checkPersonValid, checkValidatorTime } from "../utils/person";
 import { decodeJwt } from "../utils/claims";
 import { z } from "zod";
+import { SiteView } from "lemmy-js-client";
 
 async function readLocal() {
   const [response] = await db
@@ -39,7 +40,7 @@ async function readLocal() {
     return null;
   }
 
-  response.site.privateKey = null;
+  response.site.private_key = null;
 
   return {
     site: response.site,

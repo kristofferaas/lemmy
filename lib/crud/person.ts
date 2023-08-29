@@ -14,9 +14,9 @@ export async function getPersonBlockViewForPerson(
     .innerJoin(person, eq(person.id, person.id))
     .innerJoin(
       targetPersonAlias,
-      eq(personBlock.targetId, targetPersonAlias.id)
+      eq(personBlock.target_id, targetPersonAlias.id)
     )
-    .where(eq(personBlock.personId, personId))
+    .where(eq(personBlock.person_id, personId))
     .where(eq(targetPersonAlias.deleted, false))
     .orderBy(personBlock.published);
 

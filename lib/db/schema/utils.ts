@@ -7,9 +7,9 @@ export const ltree = customType<{ data: string }>({
 });
 
 export const listingTypeEnum = pgEnum("listing_type_enum", [
-  "sad",
-  "ok",
-  "happy",
+  "All",
+  "Local",
+  "Subscribed",
 ]);
 
 export const registrationModeEnum = pgEnum("registration_mode_enum", [
