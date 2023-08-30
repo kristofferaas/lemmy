@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { InferSelectModel, eq } from "drizzle-orm";
 import { db } from "../db";
 import {
   localSite,
@@ -25,34 +25,55 @@ import { getAllTaglines } from "./tagline";
 import { checkPersonValid, checkValidatorTime } from "../utils/person";
 import { decodeJwt } from "../utils/claims";
 import { z } from "zod";
-import type { GetSiteResponse, MyUserInfo } from "lemmy-js-client";
+import type {
+  GetSiteResponse,
+  MyUserInfo,
+  PersonView,
+  SiteView,
+} from "lemmy-js-client";
+import { replaceNullWithUndefined } from "../utils/replaceNullWithUndefined";
 
 async function readLocal() {
-  const [response] = await db
-    .select()
+  const response = await db
+    .select({
+      site: site,
+      local_site: localSite,
+      local_site_rate_limit: localSiteRateLimit,
+      counts: siteAggregates,
+    })
     .from(site)
     .innerJoin(localSite, eq(site.id, localSite.id))
     .innerJoin(localSiteRateLimit, eq(site.id, localSiteRateLimit.id))
     .innerJoin(siteAggregates, eq(site.id, siteAggregates.id))
     .limit(1);
 
-  if (!response) {
-    return null;
+  return fiddle2(response);
+}
+
+const fiddle2 = (
+  items: {
+    site: InferSelectModel<typeof site>;
+    local_site: InferSelectModel<typeof localSite>;
+    local_site_rate_limit: InferSelectModel<typeof localSiteRateLimit>;
+    counts: InferSelectModel<typeof siteAggregates>;
+  }[],
+): SiteView | undefined => {
+  const first = items.at(0);
+  if (!first) {
+    return undefined;
   }
 
-  response.site.private_key = null;
+  first.site.private_key = null;
 
-  return {
-    site: response.site,
-    local_site: response.local_site,
-    local_site_rate_limit: response.local_site_rate_limit,
-    counts: response.site_aggregates,
-  };
-}
+  return replaceNullWithUndefined(first);
+};
 
 async function getAdmins() {
   const response = await db
-    .select()
+    .select({
+      person: person,
+      counts: personAggregates,
+    })
     .from(person)
     .innerJoin(personAggregates, eq(person.id, personAggregates.id))
     .leftJoin(localUser, eq(person.id, localUser.id))
@@ -60,8 +81,17 @@ async function getAdmins() {
     .where(eq(person.deleted, false))
     .orderBy(person.published);
 
-  return response;
+  return fiddle(response);
 }
+
+const fiddle = (
+  items: {
+    person: InferSelectModel<typeof person>;
+    counts: InferSelectModel<typeof personAggregates>;
+  }[],
+): PersonView[] => {
+  return replaceNullWithUndefined(items);
+};
 
 export const getSiteRequestSchema = z.object({
   auth: z.string().optional(),
