@@ -25,7 +25,7 @@ import { getAllTaglines } from "./tagline";
 import { checkPersonValid, checkValidatorTime } from "../utils/person";
 import { decodeJwt } from "../utils/claims";
 import { z } from "zod";
-import { SiteView } from "lemmy-js-client";
+import type { GetSiteResponse } from "lemmy-js-client";
 
 async function readLocal() {
   const [response] = await db
@@ -72,7 +72,7 @@ type GetSiteRequest = z.infer<typeof getSiteRequestSchema>;
 export async function getSite(request: GetSiteRequest) {
   const site_view = await readLocal();
   if (!site_view) {
-    return null;
+    throw new Error("Site not found");
   }
 
   const admins = await getAdmins();
@@ -87,13 +87,13 @@ export async function getSite(request: GetSiteRequest) {
   return {
     site_view,
     admins,
-    version: "asdf",
+    version: "serverless-0.0.1-dev",
     my_user,
     all_languages,
     discussion_languages,
     taglines,
     custom_emojis,
-  };
+  } satisfies GetSiteResponse;
 }
 
 async function getMyUser(request: GetSiteRequest) {
