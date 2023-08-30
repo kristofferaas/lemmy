@@ -25,7 +25,7 @@ import { getAllTaglines } from "./tagline";
 import { checkPersonValid, checkValidatorTime } from "../utils/person";
 import { decodeJwt } from "../utils/claims";
 import { z } from "zod";
-import type { GetSiteResponse } from "lemmy-js-client";
+import type { GetSiteResponse, MyUserInfo } from "lemmy-js-client";
 
 async function readLocal() {
   const [response] = await db
@@ -116,9 +116,9 @@ async function getMyUser(request: GetSiteRequest) {
       community_blocks,
       person_blocks,
       discussion_languages,
-    };
+    } satisfies MyUserInfo;
   } else {
-    return null;
+    return undefined;
   }
 }
 

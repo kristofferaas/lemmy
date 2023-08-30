@@ -7,6 +7,7 @@ import {
   site,
   siteLanguage,
 } from "../db/schema/schema";
+import { LanguageId } from "lemmy-js-client";
 
 export async function getLanguages() {
   const response = await db.select().from(language);
@@ -23,8 +24,14 @@ export async function getSiteLanguageRaw() {
     .innerJoin(siteLanguage, eq(site.id, siteLanguage.id))
     .orderBy(siteLanguage.id);
 
-  return response;
+  return fiddle(response);
 }
+
+const fiddle = (
+  items: { languageId: InferSelectModel<typeof language>["id"] }[],
+): LanguageId[] => {
+  return items.map((item) => item.languageId);
+};
 
 export async function getLocalUserLanguage(
   localUserId: InferSelectModel<typeof localUserLanguage>["id"],

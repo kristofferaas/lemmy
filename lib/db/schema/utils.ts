@@ -18,4 +18,23 @@ export const registrationModeEnum = pgEnum("registration_mode_enum", [
   "Open",
 ]);
 
-export const sortTypeEnum = pgEnum("sort_type_enum", ["hot", "new"]);
+export const sortTypeEnum = pgEnum("sort_type_enum", [
+  "Active",
+  "Hot",
+  "New",
+  "Old",
+  "TopDay",
+  "TopWeek",
+  "TopMonth",
+  "TopYear",
+  "TopAll",
+  "MostComments",
+  "NewComments",
+  "TopHour",
+  "TopSixHour",
+  "TopTwelveHour",
+  "TopThreeMonths",
+  "TopSixMonths",
+  "TopNineMonths",
+  "Controversial",
+]);

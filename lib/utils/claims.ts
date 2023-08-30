@@ -5,7 +5,7 @@ import { env } from "../env";
 const claimsSchema = z.object({
   sub: z.string(),
   iss: z.string(),
-  iat: z.coerce.date(),
+  iat: z.number(),
 });
 
 export type Claims = z.infer<typeof claimsSchema>;

@@ -1,21 +1,17 @@
-import { InferSelectModel } from "drizzle-orm";
-import { localUser, person } from "../db/schema/schema";
+import { LocalUser, Person } from "lemmy-js-client";
 import { Claims } from "./claims";
 
-export function checkValidatorTime(
-  checkLocalUser: InferSelectModel<typeof localUser>,
-  claims: Claims
-) {
+export function checkValidatorTime(checkLocalUser: LocalUser, claims: Claims) {
   const { validator_time } = checkLocalUser;
   if (validator_time) {
-    if (claims.iat < validator_time) {
+    if (new Date(claims.iat) < new Date(validator_time)) {
       return false;
     }
   }
   return true;
 }
 
-export function checkPersonValid(checkPerson: InferSelectModel<typeof person>) {
+export function checkPersonValid(checkPerson: Person) {
   const { banned, ban_expires, deleted } = checkPerson;
   if (isBanned(banned, ban_expires)) {
     return false;
@@ -26,10 +22,10 @@ export function checkPersonValid(checkPerson: InferSelectModel<typeof person>) {
   return true;
 }
 
-export function isBanned(banned: boolean, ban_expires: Date) {
+export function isBanned(banned: boolean, ban_expires?: string) {
   if (banned) {
     if (ban_expires) {
-      if (ban_expires > new Date()) {
+      if (new Date(ban_expires) > new Date()) {
         return true;
       }
     } else {
